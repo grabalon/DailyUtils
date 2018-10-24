@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 
@@ -36,11 +38,7 @@ namespace QuarterlyFunding
             }
 
             _contract.DataChanged += OnContractDataChanged;
-
-            var account = new Account();
-            _contract.Accounts.Add(account);
-            account.Name = "Chase";
-            account.Value = 110.20m;
+            OnContractDataChanged(this, EventArgs.Empty);
         }
 
         private void OnContractDataChanged(object sender, System.EventArgs e)
@@ -53,5 +51,10 @@ namespace QuarterlyFunding
                 serializer.Serialize(file, _contract);
             }
         }
+
+        public ObservableCollection<Account> Accounts => _contract.Accounts;
+        public ObservableCollection<Goal> Goals => _contract.Goals;
+        public ObservableCollection<Transaction> Transactions => _contract.Transactions;
+        public ObservableCollection<Allotment> Allotments => _contract.Allotments;
     }
 }

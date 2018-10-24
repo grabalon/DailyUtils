@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace QuarterlyFunding
@@ -9,8 +10,16 @@ namespace QuarterlyFunding
     {
         public void Initialize()
         {
-            InitializeAccounts();
+            if (_accounts != null)
+                ConnectCollectionEvents(_accounts, nameof(Accounts));
+            if (_transactions != null)
+                ConnectCollectionEvents(_transactions, nameof(Transactions));
+            if (_goals != null)
+                ConnectCollectionEvents(_goals, nameof(Goals));
+            if (_allotments != null)
+                ConnectCollectionEvents(_allotments, nameof(Allotments));
         }
+
         [DataMember(Name = "Accounts", IsRequired = false, EmitDefaultValue = false)]
         private ObservableCollection<Account> _accounts;
         public ObservableCollection<Account> Accounts
@@ -20,22 +29,21 @@ namespace QuarterlyFunding
                 if (_accounts == null)
                 {
                     _accounts = new ObservableCollection<Account>();
-                    InitializeAccounts();
+                    ConnectCollectionEvents(_accounts, nameof(Accounts));
                 }
                 return _accounts;
             }
         }
 
-        private void InitializeAccounts()
+        private void ConnectCollectionEvents<T>(ObservableCollection<T> collection, string propertyName) where T : FinancialDataContractBase
         {
-            _accounts.CollectionChanged += (s, e) =>
+            collection.CollectionChanged += (s, e) =>
             {
                 if (e.OldItems != null)
                 {
                     foreach (var item in e.OldItems)
                     {
-                        var oldAccount = item as Account;
-                        oldAccount.DataChanged -= RaiseDataChanged;
+                        (item as FinancialDataContractBase).DataChanged -= RaiseDataChanged;
                     }
                 }
 
@@ -43,16 +51,15 @@ namespace QuarterlyFunding
                 {
                     foreach (var item in e.NewItems)
                     {
-                        var newAccount = item as Account;
-                        newAccount.DataChanged += RaiseDataChanged;
+                        (item as FinancialDataContractBase).DataChanged += RaiseDataChanged;
                     }
                 }
 
-                RaiseDataChanged(s, e);
+                RaiseDataChanged(s, new PropertyChangedEventArgs(propertyName));
             };
         }
 
-        [DataMember(Name = "ProjectedTransactions", IsRequired = false, EmitDefaultValue = false)]
+        [DataMember(Name = "Transactions", IsRequired = false, EmitDefaultValue = false)]
         private ObservableCollection<Transaction> _transactions;
         public ObservableCollection<Transaction> Transactions
         {
@@ -61,7 +68,7 @@ namespace QuarterlyFunding
                 if (_transactions == null)
                 {
                     _transactions = new ObservableCollection<Transaction>();
-                    _transactions.CollectionChanged += (o, s) => RaiseDataChanged();
+                    ConnectCollectionEvents(_transactions, nameof(Transactions));
                 }
                 return _transactions;
             }
@@ -76,7 +83,7 @@ namespace QuarterlyFunding
                 if (_goals == null)
                 {
                     _goals = new ObservableCollection<Goal>();
-                    _goals.CollectionChanged += (o, s) => RaiseDataChanged();
+                    ConnectCollectionEvents(_goals, nameof(Goals));
                 }
                 return _goals;
             }
@@ -91,7 +98,7 @@ namespace QuarterlyFunding
                 if (_allotments == null)
                 {
                     _allotments = new ObservableCollection<Allotment>();
-                    _allotments.CollectionChanged += (o, s) => RaiseDataChanged();
+                    ConnectCollectionEvents(_allotments, nameof(Allotments));
                 }
                 return _allotments;
             }

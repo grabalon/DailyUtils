@@ -3,7 +3,7 @@
 namespace QuarterlyFunding
 {
     [DataContract]
-    internal class Account : FinancialDataContractBase
+    public class Account : FinancialDataContractBase
     {
         [DataMember]
         private string _name;

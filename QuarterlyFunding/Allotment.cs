@@ -7,12 +7,56 @@ namespace QuarterlyFunding
     public class Allotment : FinancialDataContractBase
     {
         [DataMember]
-        public string GoalName { get; set; }
+        private string _goalName;
+        public string GoalName
+        {
+            get
+            {
+                return _goalName;
+            }
+            set
+            {
+                if (value != _goalName)
+                {
+                    _goalName = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
 
         [DataMember]
-        public decimal Value { get; set; }
+        private decimal _value;
+        public decimal Value {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                if (value != _value)
+                {
+                    _value = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
 
         [DataMember(IsRequired = false)]
-        public DateTime ProjectedDate;
+        private DateTime _date;
+        public DateTime Date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                if (value != _date)
+                {
+                    _date = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
     }
 }

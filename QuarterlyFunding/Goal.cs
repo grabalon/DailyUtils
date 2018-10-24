@@ -4,15 +4,59 @@ using System.Runtime.Serialization;
 namespace QuarterlyFunding
 {
     [DataContract]
-    internal class Goal
+    public class Goal : FinancialDataContractBase
     {
         [DataMember]
-        public string Name { get; set; }
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value != _name)
+                {
+                    _name = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
 
         [DataMember]
-        public decimal Value { get; set; }
+        private decimal _value;
+        public decimal Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                if (value != _value)
+                {
+                    _value = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
 
         [DataMember]
-        public DateTime Deadline { get; set; }
+        private DateTime _deadline;
+        public DateTime Deadline {
+            get
+            {
+                return _deadline;
+            }
+            set
+            {
+                if (value != _deadline)
+                {
+                    _deadline = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
     }
 }

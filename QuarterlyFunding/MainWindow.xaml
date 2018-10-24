@@ -10,6 +10,35 @@
         <local:RootVM x:Key="RootVM" />
     </Window.Resources>
     <Grid DataContext="{StaticResource RootVM}">
-        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+            <TextBlock>Accounts</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding}" CommandParameter="Add Account">Add Account</Button>
+                <Button Command="{Binding}" CommandParameter="Delete Account">Delete Account</Button>
+            </StackPanel>
+            <ListView ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" DataContext="{Binding SelectedAccount}">
+            <TextBlock>Account Name</TextBlock>
+            <TextBox Text="{Binding Name, Mode=TwoWay}" />
+            <TextBlock>Value</TextBlock>
+            <TextBox Text="{Binding Value, Mode=TwoWay}" />
+        </StackPanel>
     </Grid>
 </Window>
