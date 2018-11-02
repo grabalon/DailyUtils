@@ -10,35 +10,56 @@
         <local:RootVM x:Key="RootVM" />
     </Window.Resources>
     <Grid DataContext="{StaticResource RootVM}">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-            <TextBlock>Accounts</TextBlock>
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding}" CommandParameter="Add Account">Add Account</Button>
-                <Button Command="{Binding}" CommandParameter="Delete Account">Delete Account</Button>
-            </StackPanel>
-            <ListView ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" DataContext="{Binding SelectedAccount}">
-            <TextBlock>Account Name</TextBlock>
-            <TextBox Text="{Binding Name, Mode=TwoWay}" />
-            <TextBlock>Value</TextBlock>
-            <TextBox Text="{Binding Value, Mode=TwoWay}" />
-        </StackPanel>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock>Accounts</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15px" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="15px" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="15px" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15px" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="15px" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="15px" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="15px" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="15px" />
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel HorizontalAlignment="Stretch">
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" />
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Value}" />
+                                    <TextBlock />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <DockPanel Grid.Column="1" Grid.Row="7">
+                        <Button DockPanel.Dock="Left" Command="{Binding}" CommandParameter="Add Account">Add Account</Button>
+                        <Button DockPanel.Dock="Right" Command="{Binding}" CommandParameter="Delete Account">Delete Account</Button>
+                        <TextBlock />
+                    </DockPanel>
+                    <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SelectedAccount.Name, Mode=TwoWay}" />
+                    <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding SelectedAccount.Value, Mode=TwoWay}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
