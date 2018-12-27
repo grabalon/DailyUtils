@@ -6,7 +6,7 @@ using System.IO;
 
 namespace QuarterlyFunding
 {
-    internal class FinancialData
+    public class FinancialData
     {
         private string _backingFile;
         private FinancialDataContract _contract;

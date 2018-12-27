@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker", "TimeTracker\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuarterlyFunding", "QuarterlyFunding\QuarterlyFunding.csproj", "{B393812E-FD53-461B-9699-DEADE7F55DA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MortgageBurnDown", "MortgageBurnDown\MortgageBurnDown.csproj", "{1AC36C65-2BFB-46AB-A6C2-931747A07477}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B393812E-FD53-461B-9699-DEADE7F55DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B393812E-FD53-461B-9699-DEADE7F55DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B393812E-FD53-461B-9699-DEADE7F55DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC36C65-2BFB-46AB-A6C2-931747A07477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC36C65-2BFB-46AB-A6C2-931747A07477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC36C65-2BFB-46AB-A6C2-931747A07477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC36C65-2BFB-46AB-A6C2-931747A07477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

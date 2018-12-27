@@ -12,7 +12,19 @@ namespace QuarterlyFunding
 {
     public class RootVM : INotifyPropertyChanged, ICommand
     {
-        FinancialData _financialData = new FinancialData(@"FinancialData.json");
+        private readonly FinancialData _financialData = new FinancialData(@"FinancialData.json");
+
+        public OverviewVM Overview
+        {
+            get
+            {
+                if (_overview == null)
+                {
+                    _overview = new OverviewVM(financialData: _financialData);
+                }
+                return _overview;
+            }
+        }
 
         private void RaisePropertyChanged([CallerMemberName] string caller = null)
         {
@@ -89,6 +101,8 @@ namespace QuarterlyFunding
         public ObservableCollection<Allotment> Allotments => _financialData.Allotments;
 
         private Account _selectedAccount;
+        private OverviewVM _overview;
+
         public Account SelectedAccount
         {
             get
