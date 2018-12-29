@@ -62,9 +62,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GazelleMultiBindingConverter.cs" />
+    <Compile Include="GazelleSeries.cs" />
+    <Compile Include="GazelleVM.cs" />
     <Compile Include="IMortgagePaydownSeries.cs" />
     <Compile Include="MortgageConstants.cs" />
-    <Compile Include="OriginalSeries.cs" />
+    <Compile Include="PaydownSeriesExports.cs" />
     <Compile Include="RootVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -16,36 +16,32 @@ namespace MortgageBurnDown
     [Export]
     public class RootVM : INotifyPropertyChanged
     {
-        private static readonly Dictionary<DateTime, decimal> _gazelleExtras = new Dictionary<DateTime, decimal>();
+        private Dictionary<string, LineSeries> _mefSeriesPlots = new Dictionary<string, LineSeries>();
 
         [ImportMany]
         private List<Lazy<IMortgagePaydownSeries, IMortgagePaydownSeriesMetadata>> _seriesPaymentData;
 
-        private Dictionary<string, LineSeries> _mefSeriesPlots = new Dictionary<string, LineSeries>();
-
         public RootVM()
         {
             InitMef();
-            InitGazelle();
             CreateSeries();
 
-            _model = new PlotModel();
-            _model.Title = "Mortgage";
+            GazelleVM = new GazelleVM();
 
-            _model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            Model = new PlotModel();
+            Model.Title = "Mortgage";
+
+            Model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
 
             var dateAxis = new DateTimeAxis();
             dateAxis.Position = AxisPosition.Bottom;
             dateAxis.Minimum = DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(0));
             dateAxis.Maximum = DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(MortgageConstants.OriginalDurationInMonths));
-            _model.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom });
-            _model.Series.Add(_originalSeries);
-            _model.Series.Add(_currentSeries);
-            _model.Series.Add(_gazelleSeries);
+            Model.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom });
 
             foreach (var seriesPair in _mefSeriesPlots)
             {
-                _model.Series.Add(seriesPair.Value);
+                Model.Series.Add(seriesPair.Value);
             }
         }
 
@@ -59,122 +55,57 @@ namespace MortgageBurnDown
             }
         }
 
-        private void InitGazelle()
-        {
-            _gazelleExtras[DateTime.Parse("April 2019")] = 20000;
-            _gazelleExtras[DateTime.Parse("April 2020")] = 20000;
-            _gazelleExtras[DateTime.Parse("April 2021")] = 20000;
-            _gazelleExtras[DateTime.Parse("April 2022")] = 20000;
-            _gazelleExtras[DateTime.Parse("April 2023")] = 20000;
-        }
-
-
-
         private void CreateSeries()
         {
             foreach (var seriesLazy in _seriesPaymentData)
             {
                 var lineSeries = new LineSeries();
                 lineSeries.Title = seriesLazy.Metadata.Name;
+                var series = seriesLazy.Value;
 
-                var seriesValue = seriesLazy.Value;
-                var balance = seriesValue.StartValue;
-                var startDate = seriesValue.StartDate;
+                PopulateSeriesData(lineSeries, series);
 
-                int m;
-                for (m = 0; balance > 0; m++)
+                series.PaymentsChanged += (o, e) =>
                 {
-                    var date = MortgageConstants.GetDateFromMonthOfMortgage(m);
+                    lineSeries.Points.Clear();
+                    PopulateSeriesData(lineSeries, series);
+                    Model.InvalidatePlot(updateData: true);
+                };
 
-                    if (date >= startDate)
-                    {
-                        lineSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), (double)balance));
-                        balance = HandleMonth(balance, seriesValue.GetPayment(date));
-                    }
-                }
-                lineSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(m)), 0));
                 _mefSeriesPlots[lineSeries.Title] = lineSeries;
             }
+        }
 
-            _originalSeries = new LineSeries();
-            _originalSeries.Title = "Original";
+        private static void PopulateSeriesData(LineSeries lineSeries, IMortgagePaydownSeries series)
+        {
+            var balance = series.StartValue;
+            var startDate = series.StartDate;
 
-            _currentSeries = new LineSeries();
-            _currentSeries.Title = "Current";
-
-            _gazelleSeries = new LineSeries();
-            _gazelleSeries.Title = "Gazelle";
-
-            var balanceO = MortgageConstants.OriginalBalance;
-            var balanceC = MortgageConstants.CurrentBalance;
-            var balanceG = balanceC;
-
-            bool currentZero = false;
-            bool gazelleZero = false;
-
-            int month;
-            for (month = 0; balanceO > 0; month++)
+            int m;
+            for (m = 0; balance > 0; m++)
             {
-                var date = MortgageConstants.GetDateFromMonthOfMortgage(month);
-                var now = DateTime.Now;
-                var thisMonth = new DateTime(now.Year, now.Month, 1);
+                var date = MortgageConstants.GetDateFromMonthOfMortgage(m);
 
-                _originalSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), (double)balanceO));
-                balanceO = HandleMonth(balanceO, MortgageConstants.MinimumPayment);
-
-                if (date >= thisMonth && !currentZero)
+                if (date >= startDate)
                 {
-                    if (balanceC <= 0)
-                    {
-                        currentZero = true;
-                    }
-
-                    _currentSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), (double)balanceC));
-                    balanceC = HandleMonth(balanceC, MortgageConstants.MinimumPayment);
-
-                    if (!gazelleZero)
-                    {
-                        if (balanceG <= 0)
-                        {
-                            gazelleZero = true;
-                        }
-
-                        _gazelleSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), (double)balanceG));
-
-                        var gazellePayment = MortgageConstants.MinimumPayment;
-                        if (_gazelleExtras.ContainsKey(date))
-                        {
-                            gazellePayment += _gazelleExtras[date];
-                        }
-
-                        balanceG = HandleMonth(balanceG, gazellePayment);
-
-                        if (balanceG < 20000)
-                        {
-                            balanceG = 0;
-                        }
-                    }
+                    lineSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), (double)balance));
+                    balance = HandleMonth(balance, series.GetPayment(date, balance));
                 }
             }
-
-            _originalSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(month)), 0));
+            lineSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(m)), 0));
         }
 
-        private PlotModel _model;
-        private LineSeries _originalSeries;
-        private LineSeries _currentSeries;
-        private LineSeries _gazelleSeries;
+        public PlotModel Model { get; }
 
-        public PlotModel Model
-        {
-            get
-            {
-                return _model;
-            }
-        }
+        public GazelleVM GazelleVM { get; }
 
         private static decimal HandleMonth(decimal balance, decimal payment)
         {
+            if (balance == payment)
+            {
+                return 0;
+            }
+
             decimal interest = Math.Round(MortgageConstants.Interest / 12 * balance, 2);
             return Math.Max(balance + interest - payment, 0);
         }

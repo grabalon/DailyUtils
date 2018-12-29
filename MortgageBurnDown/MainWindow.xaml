@@ -9,8 +9,56 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:RootVM x:Key="RootVM" />
+        <local:GazelleMultiBindingConverter x:Key="GazelleMultiBindingConverter" />
     </Window.Resources>
     <Grid DataContext="{StaticResource RootVM}">
-        <oxy:PlotView Model="{Binding Model}" />
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock>Overview</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <oxy:PlotView Model="{Binding Model}" />
+                </Grid>
+            </TabItem>
+            <TabItem DataContext="{Binding GazelleVM}">
+                <TabItem.Header>
+                    <TextBlock>Overview</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ListView Grid.Column="0" ItemsSource="{Binding ExtraPayments}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <DatePicker Name="Date" />
+                        <TextBox Name="Value" />
+                        <Button Name="AddButton" Content="Add" Command="{Binding}">
+                            <Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource GazelleMultiBindingConverter}">
+                                    <MultiBinding.Bindings>
+                                        <Binding ElementName="AddButton" Path="Content" />
+                                        <Binding ElementName="Date" Path="SelectedDate" />
+                                        <Binding ElementName="Value" Path="Text" />
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Name="RemoveButton" Content="Remove" Command="{Binding}">
+                            <Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource GazelleMultiBindingConverter}">
+                                    <MultiBinding.Bindings>
+                                        <Binding ElementName="RemoveButton" Path="Content" />
+                                        <Binding ElementName="Date" Path="SelectedDate" />
+                                        <Binding ElementName="Value" Path="Text" />
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </Button.CommandParameter>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

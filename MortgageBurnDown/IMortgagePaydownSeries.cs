@@ -10,7 +10,8 @@ namespace MortgageBurnDown
     {
         DateTime StartDate { get; }
         decimal StartValue { get; }
-        decimal GetPayment(DateTime date);
+        decimal GetPayment(DateTime date, decimal balance);
+        event EventHandler PaymentsChanged;
     }
 
     public interface IMortgagePaydownSeriesMetadata
