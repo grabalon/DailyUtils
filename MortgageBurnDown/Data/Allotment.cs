@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace QuarterlyFunding
+namespace MortgageBurnDown
 {
     [DataContract]
     public class Allotment : FinancialDataContractBase

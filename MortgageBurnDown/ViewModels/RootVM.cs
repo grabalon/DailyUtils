@@ -26,8 +26,6 @@ namespace MortgageBurnDown
             InitMef();
             CreateSeries();
 
-            GazelleVM = new GazelleVM();
-
             Model = new PlotModel();
             Model.Title = "Mortgage";
 
@@ -38,6 +36,9 @@ namespace MortgageBurnDown
             dateAxis.Minimum = DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(0));
             dateAxis.Maximum = DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(MortgageConstants.OriginalDurationInMonths));
             Model.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom });
+
+            var financialData = new FinancialData(Settings.Default.DataFile);
+            GazelleVM = new GazelleVM(financialData);
 
             foreach (var seriesPair in _mefSeriesPlots)
             {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace QuarterlyFunding
+namespace MortgageBurnDown
 {
     public class FinancialDataContractBase : INotifyPropertyChanged
     {
@@ -13,11 +13,21 @@ namespace QuarterlyFunding
 
         internal void RaiseDataChanged(object sender, PropertyChangedEventArgs e)
         {
-            DataChanged?.Invoke(sender, e);
             PropertyChanged?.Invoke(sender, e);
         }
 
-        public event PropertyChangedEventHandler DataChanged;
+        public event PropertyChangedEventHandler DataChanged
+        {
+            add
+            {
+                PropertyChanged += value;
+            }
+            remove
+            {
+                PropertyChanged -= value;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

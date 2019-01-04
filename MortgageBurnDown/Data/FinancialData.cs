@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
-namespace QuarterlyFunding
+namespace MortgageBurnDown
 {
     public class FinancialData
     {
@@ -39,6 +40,18 @@ namespace QuarterlyFunding
 
             _contract.DataChanged += OnContractDataChanged;
             OnContractDataChanged(this, EventArgs.Empty);
+        }
+
+        public event PropertyChangedEventHandler DataChanged
+        {
+            add
+            {
+                _contract.DataChanged += value;
+            }
+            remove
+            {
+                _contract.DataChanged -= value;
+            }
         }
 
         private void OnContractDataChanged(object sender, System.EventArgs e)

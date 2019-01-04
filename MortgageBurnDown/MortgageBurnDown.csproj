@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
     </Reference>
@@ -44,6 +47,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,56 +62,59 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="UI\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GazelleMultiBindingConverter.cs" />
-    <Compile Include="GazelleSeries.cs" />
-    <Compile Include="GazelleVM.cs" />
-    <Compile Include="IMortgagePaydownSeries.cs" />
-    <Compile Include="MortgageConstants.cs" />
-    <Compile Include="PaydownSeriesExports.cs" />
-    <Compile Include="RootVM.cs" />
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Data\Account.cs" />
+    <Compile Include="Data\Allotment.cs" />
+    <Compile Include="Data\FinancialData.cs" />
+    <Compile Include="Data\FinancialDataContract.cs" />
+    <Compile Include="Data\FinancialDataContractBase.cs" />
+    <Compile Include="Data\Goal.cs" />
+    <Compile Include="Data\Transaction.cs" />
+    <Compile Include="UI\GazelleMultiBindingConverter.cs" />
+    <Compile Include="ViewModels\GazelleSeries.cs" />
+    <Compile Include="ViewModels\GazelleVM.cs" />
+    <Compile Include="ViewModels\IMortgagePaydownSeries.cs" />
+    <Compile Include="ViewModels\MortgageConstants.cs" />
+    <Compile Include="ViewModels\PaydownSeriesExports.cs" />
+    <Compile Include="ViewModels\RootVM.cs" />
+    <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="UI\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="UI\MainWindow.xaml.cs">
+      <DependentUpon>UI\MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
+    <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Data\FinancialData.json" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
+    <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="UI\App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

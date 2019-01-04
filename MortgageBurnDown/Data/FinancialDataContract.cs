@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace QuarterlyFunding
+namespace MortgageBurnDown
 {
     [DataContract]
     internal class FinancialDataContract : FinancialDataContractBase
