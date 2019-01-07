@@ -37,6 +37,11 @@ namespace MortgageBurnDown
 
         private void ConnectCollectionEvents<T>(ObservableCollection<T> collection, string propertyName) where T : FinancialDataContractBase
         {
+            foreach (FinancialDataContractBase item in collection)
+            {
+                item.DataChanged += RaiseDataChanged;
+            }
+
             collection.CollectionChanged += (s, e) =>
             {
                 if (e.OldItems != null)

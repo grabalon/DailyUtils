@@ -13,21 +13,20 @@ namespace MortgageBurnDown
 
         internal void RaiseDataChanged(object sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(sender, e);
-        }
-
-        public event PropertyChangedEventHandler DataChanged
-        {
-            add
+            var propertyChanged = PropertyChanged;
+            if (propertyChanged != null)
             {
-                PropertyChanged += value;
+                propertyChanged(sender, e);
             }
-            remove
+
+            var dataChanged = DataChanged;
+            if (dataChanged != null)
             {
-                PropertyChanged -= value;
+                dataChanged(sender, e);
             }
         }
 
+        public event PropertyChangedEventHandler DataChanged;
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

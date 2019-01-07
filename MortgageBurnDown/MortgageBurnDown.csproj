@@ -80,6 +80,7 @@
     <Compile Include="ViewModels\MortgageConstants.cs" />
     <Compile Include="ViewModels\PaydownSeriesExports.cs" />
     <Compile Include="ViewModels\RootVM.cs" />
+    <Compile Include="ViewModels\SavingsVM.cs" />
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

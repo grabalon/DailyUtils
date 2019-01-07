@@ -61,18 +61,18 @@ namespace MortgageBurnDown
         }
 
         [DataMember(IsRequired = false)]
-        private string _goalName;
-        public string GoalName
+        private string _allotmentName;
+        public string AllotmentName
         {
             get
             {
-                return _goalName;
+                return _allotmentName;
             }
             set
             {
-                if (value != _goalName)
+                if (value != _allotmentName)
                 {
-                    _goalName = value;
+                    _allotmentName = value;
                     RaiseDataChanged();
                 }
             }

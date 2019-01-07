@@ -39,23 +39,15 @@ namespace MortgageBurnDown
             }
 
             _contract.DataChanged += OnContractDataChanged;
-            OnContractDataChanged(this, EventArgs.Empty);
+            OnContractDataChanged(this, new PropertyChangedEventArgs(string.Empty));
         }
 
-        public event PropertyChangedEventHandler DataChanged
-        {
-            add
-            {
-                _contract.DataChanged += value;
-            }
-            remove
-            {
-                _contract.DataChanged -= value;
-            }
-        }
+        public event PropertyChangedEventHandler DataChanged;
 
-        private void OnContractDataChanged(object sender, System.EventArgs e)
+        private void OnContractDataChanged(object sender, PropertyChangedEventArgs e)
         {
+            DataChanged?.Invoke(sender, e);
+
             // serialize JSON directly to a file
             using (StreamWriter file = File.CreateText(_backingFile))
             {

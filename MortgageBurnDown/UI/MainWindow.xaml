@@ -15,15 +15,59 @@
         <TabControl>
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock>Overview</TextBlock>
+                    <TextBlock>Mortgage Burn Down</TextBlock>
                 </TabItem.Header>
                 <Grid>
                     <oxy:PlotView Model="{Binding Model}" />
                 </Grid>
             </TabItem>
+            <TabItem DataContext="{Binding SavingsVM}">
+                <TabItem.Header>
+                    <TextBlock>Savings</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <oxy:PlotView Grid.Row="0" Model="{Binding Model}" />
+                    <CheckBox Grid.Row="1" IsChecked="{Binding IncludeGazelle, Mode=TwoWay}" Content="Include Gazelle" />
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock>Accounts</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ListView Grid.Column="0" ItemsSource="{Binding FinancialData.Accounts}" SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
+                        <ListView.Resources>
+                            <DataTemplate DataType="{x:Type local:Account}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Value}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.Resources>
+                    </ListView>
+                    <StackPanel Grid.Column="1" DataContext="{Binding SelectedAccount}" Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Account Name</TextBlock>
+                            <TextBox Text="{Binding Name, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Current Balance</TextBlock>
+                            <TextBox Text="{Binding Value, Mode=TwoWay}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
             <TabItem DataContext="{Binding GazelleVM}">
                 <TabItem.Header>
-                    <TextBlock>Overview</TextBlock>
+                    <TextBlock>Gazelle Payments</TextBlock>
                 </TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>

@@ -20,6 +20,7 @@ namespace MortgageBurnDown
 
         [ImportMany]
         private List<Lazy<IMortgagePaydownSeries, IMortgagePaydownSeriesMetadata>> _seriesPaymentData;
+        private Account _selectedAccount;
 
         public RootVM()
         {
@@ -37,13 +38,15 @@ namespace MortgageBurnDown
             dateAxis.Maximum = DateTimeAxis.ToDouble(MortgageConstants.GetDateFromMonthOfMortgage(MortgageConstants.OriginalDurationInMonths));
             Model.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom });
 
-            var financialData = new FinancialData(Settings.Default.DataFile);
-            GazelleVM = new GazelleVM(financialData);
+            FinancialData = new FinancialData(Settings.Default.DataFile);
+            GazelleVM = new GazelleVM(FinancialData);
 
             foreach (var seriesPair in _mefSeriesPlots)
             {
                 Model.Series.Add(seriesPair.Value);
             }
+
+            SavingsVM = new SavingsVM(FinancialData);
         }
 
         private void InitMef()
@@ -98,7 +101,25 @@ namespace MortgageBurnDown
 
         public PlotModel Model { get; }
 
+        public FinancialData FinancialData { get; }
+        public Account SelectedAccount { get
+            {
+                return _selectedAccount;
+            } 
+            set
+            {
+                if (_selectedAccount != value)
+                {
+                    _selectedAccount = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public GazelleVM GazelleVM { get; }
+
+        public SavingsVM SavingsVM { get; }
+
 
         private static decimal HandleMonth(decimal balance, decimal payment)
         {
