@@ -7,9 +7,8 @@ using System.Windows.Input;
 
 namespace MortgageBurnDown
 {
-    public class GazelleVM : INotifyPropertyChanged, ICommand
+    public class GazelleVM : INotifyPropertyChanged
     {
-        private KeyValuePair<DateTime, decimal>? _selectedItem;
         private FinancialData _financialData;
 
         public GazelleVM(FinancialData financialData)
@@ -49,9 +48,9 @@ namespace MortgageBurnDown
                     // Account for each transaction we know about
                     foreach (var transaction in _financialData.Transactions)
                     {
-                        if (transaction.AccountName == account.Name && transaction.Date <= date)
+                        if (transaction.AccountName == account.Name && transaction.Payment.Date <= date)
                         {
-                            accountBalances[date] += transaction.Amount;
+                            accountBalances[date] += transaction.Payment.Amount;
                         }
                     }
                 }
@@ -107,34 +106,22 @@ namespace MortgageBurnDown
 
             // Now walk forwards through the dates and make payments for every time the balance goes up
             var max = mergedBalances.Values.FirstOrDefault();
-            ExtraPayments.Add(new KeyValuePair<DateTime, decimal>(currentMonth, max));
+            ExtraPayments.Add(new Payment(currentMonth, max));
             foreach (var date in mergedBalances.Keys)
             {
                 if (mergedBalances[date] > max)
                 {
-                    ExtraPayments.Add(new KeyValuePair<DateTime, decimal>(date, mergedBalances[date] - max));
+                    ExtraPayments.Add(new Payment(date, mergedBalances[date] - max));
                     max = mergedBalances[date];
                 }
             }
         }
 
-        public ObservableCollection<KeyValuePair<DateTime, decimal>> ExtraPayments
+        public ObservableCollection<Payment> ExtraPayments
         {
             get
             {
                 return GazelleSeries.Instance.ExtraPayments;
-            }
-        }
-
-        public KeyValuePair<DateTime, decimal> SelectedItem
-        {
-            get
-            {
-                return _selectedItem.HasValue ? _selectedItem.Value : default(KeyValuePair<DateTime, decimal>);
-            }
-            set
-            {
-                _selectedItem = value;
             }
         }
 
@@ -144,24 +131,6 @@ namespace MortgageBurnDown
         public bool CanExecute(object parameter)
         {
             return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            var tuple = parameter as Tuple<string, DateTime, decimal>;
-
-            switch (tuple.Item1)
-            {
-                case "Add":
-                    ExtraPayments.Add(new KeyValuePair<DateTime, decimal>(tuple.Item2, tuple.Item3));
-                    break;
-                case "Remove":
-                    if (_selectedItem.HasValue)
-                    {
-                        ExtraPayments.Remove(_selectedItem.Value);
-                    }
-                    break;
-            }
         }
     }
 }

@@ -72,8 +72,8 @@
     <Compile Include="Data\FinancialDataContract.cs" />
     <Compile Include="Data\FinancialDataContractBase.cs" />
     <Compile Include="Data\Goal.cs" />
+    <Compile Include="Data\Payment.cs" />
     <Compile Include="Data\Transaction.cs" />
-    <Compile Include="UI\GazelleMultiBindingConverter.cs" />
     <Compile Include="ViewModels\GazelleSeries.cs" />
     <Compile Include="ViewModels\GazelleVM.cs" />
     <Compile Include="ViewModels\IMortgagePaydownSeries.cs" />

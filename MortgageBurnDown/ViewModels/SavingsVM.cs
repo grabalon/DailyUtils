@@ -29,7 +29,10 @@ namespace MortgageBurnDown
             Model = new PlotModel();
             Model.Title = "Savings Over Time";
 
-            Model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            var valueAxis = new LinearAxis();
+            valueAxis.Position = AxisPosition.Left;
+            valueAxis.Minimum = 0;
+            Model.Axes.Add(valueAxis);
 
             var dateAxis = new DateTimeAxis();
             dateAxis.Position = AxisPosition.Bottom;
@@ -100,9 +103,9 @@ namespace MortgageBurnDown
                 
                 foreach (var transaction in _financialData.Transactions)
                 {
-                    if (transaction.Date == day)
+                    if (transaction.Payment.Date == day)
                     {
-                        accountValue += transaction.Amount;
+                        accountValue += transaction.Payment.Amount;
                     }
                 }
 

@@ -37,21 +37,21 @@ namespace MortgageBurnDown
                 return balance;
             }
 
-            var payment = MortgageConstants.MinimumPayment;
+            var partialPaymentAmount = MortgageConstants.MinimumPayment;
 
             for (int i = 0; i < ExtraPayments.Count; i++)
             {
-                var datePaymentPair = ExtraPayments[i];
-                if (datePaymentPair.Key.Month == date.Month && datePaymentPair.Key.Year == date.Year)
+                var payment = ExtraPayments[i];
+                if (payment.Date.Month == date.Month && payment.Date.Year == date.Year)
                 {
-                    payment += datePaymentPair.Value;
+                    partialPaymentAmount += payment.Amount;
                 }
             }
 
-            return payment;
+            return partialPaymentAmount;
         }
 
-        public readonly ObservableCollection<KeyValuePair<DateTime, Decimal>> ExtraPayments = new ObservableCollection<KeyValuePair<DateTime, decimal>>();
+        public readonly ObservableCollection<Payment> ExtraPayments = new ObservableCollection<Payment>();
 
         public event EventHandler PaymentsChanged;
 

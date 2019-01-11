@@ -6,6 +6,50 @@ namespace MortgageBurnDown
     [DataContract]
     public class Transaction : FinancialDataContractBase
     {
+        public override void InitializeEvents()
+        {
+            base.InitializeEvents();
+            
+            if (_payment != null)
+            {
+                _payment.DataChanged += RaiseDataChanged;
+            }
+        }
+
+        [DataMember]
+        private Payment _payment;
+        public Payment Payment
+        {
+            get
+            {
+                if (_payment == null)
+                {
+                    _payment = new Payment();
+                    _payment.DataChanged += RaiseDataChanged;
+                }
+                return _payment;
+            }
+            set
+            {
+                if (value != _payment)
+                {
+                    if (_payment != null)
+                    {
+                        _payment.DataChanged -= RaiseDataChanged;
+                    }
+
+                    _payment = value;
+
+                    if (_payment != null)
+                    {
+                        _payment.DataChanged += RaiseDataChanged;
+                    }
+
+                    RaiseDataChanged();
+                }
+            }
+        }
+
         [DataMember]
         private string _accountName;
         public string AccountName
@@ -19,42 +63,6 @@ namespace MortgageBurnDown
                 if (value != _accountName)
                 {
                     _accountName = value;
-                    RaiseDataChanged();
-                }
-            }
-        }
-
-        [DataMember]
-        private decimal _amount;
-        public decimal Amount
-        {
-            get
-            {
-                return _amount;
-            }
-            set
-            {
-                if (value != _amount)
-                {
-                    _amount = value;
-                    RaiseDataChanged();
-                }
-            }
-        }
-
-        [DataMember]
-        private DateTime _date;
-        public DateTime Date
-        {
-            get
-            {
-                return _date;
-            }
-            set
-            {
-                if (value != _date)
-                {
-                    _date = value;
                     RaiseDataChanged();
                 }
             }

@@ -19,8 +19,7 @@ namespace MortgageBurnDown
         private Dictionary<string, LineSeries> _mefSeriesPlots = new Dictionary<string, LineSeries>();
 
         [ImportMany]
-        private List<Lazy<IMortgagePaydownSeries, IMortgagePaydownSeriesMetadata>> _seriesPaymentData;
-        private Account _selectedAccount;
+        private List<Lazy<IMortgagePaydownSeries, IMortgagePaydownSeriesMetadata>> _seriesPaymentData = null;
 
         public RootVM()
         {
@@ -102,19 +101,6 @@ namespace MortgageBurnDown
         public PlotModel Model { get; }
 
         public FinancialData FinancialData { get; }
-        public Account SelectedAccount { get
-            {
-                return _selectedAccount;
-            } 
-            set
-            {
-                if (_selectedAccount != value)
-                {
-                    _selectedAccount = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
 
         public GazelleVM GazelleVM { get; }
 

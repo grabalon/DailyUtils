@@ -9,7 +9,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:RootVM x:Key="RootVM" />
-        <local:GazelleMultiBindingConverter x:Key="GazelleMultiBindingConverter" />
     </Window.Resources>
     <Grid DataContext="{StaticResource RootVM}">
         <TabControl>
@@ -39,30 +38,7 @@
                     <TextBlock>Accounts</TextBlock>
                 </TabItem.Header>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <ListView Grid.Column="0" ItemsSource="{Binding FinancialData.Accounts}" SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
-                        <ListView.Resources>
-                            <DataTemplate DataType="{x:Type local:Account}">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Value}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.Resources>
-                    </ListView>
-                    <StackPanel Grid.Column="1" DataContext="{Binding SelectedAccount}" Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Account Name</TextBlock>
-                            <TextBox Text="{Binding Name, Mode=TwoWay}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Current Balance</TextBlock>
-                            <TextBox Text="{Binding Value, Mode=TwoWay}" />
-                        </StackPanel>
-                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding FinancialData.Accounts}" />
                 </Grid>
             </TabItem>
             <TabItem DataContext="{Binding GazelleVM}">
@@ -70,39 +46,41 @@
                     <TextBlock>Gazelle Payments</TextBlock>
                 </TabItem.Header>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <ListView Grid.Column="0" ItemsSource="{Binding ExtraPayments}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
-                    <StackPanel Orientation="Vertical" Grid.Column="1">
-                        <DatePicker Name="Date" />
-                        <TextBox Name="Value" />
-                        <Button Name="AddButton" Content="Add" Command="{Binding}">
-                            <Button.CommandParameter>
-                                <MultiBinding Converter="{StaticResource GazelleMultiBindingConverter}">
-                                    <MultiBinding.Bindings>
-                                        <Binding ElementName="AddButton" Path="Content" />
-                                        <Binding ElementName="Date" Path="SelectedDate" />
-                                        <Binding ElementName="Value" Path="Text" />
-                                    </MultiBinding.Bindings>
-                                </MultiBinding>
-                            </Button.CommandParameter>
-                        </Button>
-                        <Button Name="RemoveButton" Content="Remove" Command="{Binding}">
-                            <Button.CommandParameter>
-                                <MultiBinding Converter="{StaticResource GazelleMultiBindingConverter}">
-                                    <MultiBinding.Bindings>
-                                        <Binding ElementName="RemoveButton" Path="Content" />
-                                        <Binding ElementName="Date" Path="SelectedDate" />
-                                        <Binding ElementName="Value" Path="Text" />
-                                    </MultiBinding.Bindings>
-                                </MultiBinding>
-                            </Button.CommandParameter>
-                        </Button>
-                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding ExtraPayments}" />
                 </Grid>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock>Goals</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <DataGrid ItemsSource="{Binding FinancialData.Goals}" />
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock>Allotments</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <DataGrid ItemsSource="{Binding FinancialData.Allotments}" />
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock>Transactions</TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <DataGrid ItemsSource="{Binding FinancialData.Transactions}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Account" Binding="{Binding AccountName}" />
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Payment.Amount}" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding Payment.Date}" />
+                            <DataGridTextColumn Header="Allotment" Binding="{Binding AllotmentName}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
         </TabControl>
     </Grid>
 </Window>

@@ -6,6 +6,10 @@ namespace MortgageBurnDown
 {
     public class FinancialDataContractBase : INotifyPropertyChanged
     {
+        public virtual void InitializeEvents()
+        {
+        }
+
         internal void RaiseDataChanged([CallerMemberName] string caller = null)
         {
             RaiseDataChanged(this, new PropertyChangedEventArgs(caller));

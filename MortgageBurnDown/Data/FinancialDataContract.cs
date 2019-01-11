@@ -40,6 +40,7 @@ namespace MortgageBurnDown
             foreach (FinancialDataContractBase item in collection)
             {
                 item.DataChanged += RaiseDataChanged;
+                item.InitializeEvents();
             }
 
             collection.CollectionChanged += (s, e) =>
