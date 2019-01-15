@@ -29,18 +29,20 @@ namespace MortgageBurnDown
             int currentMonthIndex = 0;
             var endMonth = MortgageConstants.GetDateFromMonthOfMortgage(MortgageConstants.OriginalDurationInMonths);
 
+            int month = 0;
+            // Get to this month
+            for (; MortgageConstants.GetDateFromMonthOfMortgage(month) < currentMonth; month++) ;
+
+            currentMonthIndex = ++month;
+
+            var nextMonth = MortgageConstants.GetDateFromMonthOfMortgage(currentMonthIndex);
+
             foreach (var account in _financialData.Accounts)
             {
                 var accountBalances = new Dictionary<DateTime, decimal>();
 
-                int month = 0;
-                // Get to this month
-                for (; MortgageConstants.GetDateFromMonthOfMortgage(month) < currentMonth; month++) ;
-
-                currentMonthIndex = month;
-
                 // For the rest of the term of the mortgage, get the current balance of the account
-                for (; month < MortgageConstants.OriginalDurationInMonths; month++)
+                for (month = currentMonthIndex; month < MortgageConstants.OriginalDurationInMonths; month++)
                 {
                     var date = MortgageConstants.GetDateFromMonthOfMortgage(month);
                     accountBalances[date] = account.Value;
@@ -50,7 +52,10 @@ namespace MortgageBurnDown
                     {
                         if (transaction.AccountName == account.Name && transaction.Payment.Date <= date)
                         {
-                            accountBalances[date] += transaction.Payment.Amount;
+                            if (string.IsNullOrEmpty(transaction.AllotmentName))
+                            {
+                                accountBalances[date] += transaction.Payment.Amount;
+                            }
                         }
                     }
                 }
@@ -62,7 +67,7 @@ namespace MortgageBurnDown
 
             foreach (var account2 in unallocatedBalances.Keys)
             {
-                for (int month = currentMonthIndex; month < MortgageConstants.OriginalDurationInMonths; month++)
+                for (month = currentMonthIndex; month < MortgageConstants.OriginalDurationInMonths; month++)
                 {
                     var date = MortgageConstants.GetDateFromMonthOfMortgage(month);
 
@@ -79,13 +84,13 @@ namespace MortgageBurnDown
 
             foreach (var allotment in _financialData.Allotments)
             {
-                for (int month = currentMonthIndex; month < MortgageConstants.OriginalDurationInMonths; month++)
+                for (month = currentMonthIndex; month < MortgageConstants.OriginalDurationInMonths; month++)
                 {
                     var date = MortgageConstants.GetDateFromMonthOfMortgage(month);
 
                     if (allotment.Date <= date)
                     {
-                        mergedBalances[date] += allotment.Value;
+                        mergedBalances[date] -= allotment.Value;
                     }
                 }
             }
@@ -106,7 +111,7 @@ namespace MortgageBurnDown
 
             // Now walk forwards through the dates and make payments for every time the balance goes up
             var max = mergedBalances.Values.FirstOrDefault();
-            ExtraPayments.Add(new Payment(currentMonth, max));
+            ExtraPayments.Add(new Payment(nextMonth, max));
             foreach (var date in mergedBalances.Keys)
             {
                 if (mergedBalances[date] > max)

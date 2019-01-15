@@ -85,5 +85,23 @@ namespace MortgageBurnDown
                 }
             }
         }
+
+        [DataMember(IsRequired = false)]
+        private string _note;
+        public string Note
+        {
+            get
+            {
+                return _note;
+            }
+            set
+            {
+                if (value != _note)
+                {
+                    _note = value;
+                    RaiseDataChanged();
+                }
+            }
+        }
     }
 }

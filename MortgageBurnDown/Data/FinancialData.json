@@ -2,43 +2,83 @@
   "Accounts": [
     {
       "_name": "Ally - Taxes",
-      "_value": 6691.52
+      "_value": 7914.90
     },
     {
-      "_name": "Ally - Emergency",
-      "_value": 30000.0
-    }
-  ],
-  "Transactions": [
-    {
-      "_payment": {
-        "_amount": 25000.0,
-        "_date": "2022-09-01T00:00:00"
-      },
-      "_accountName": "Ally - Taxes",
-      "_allotmentName": null
+      "_name": "FT Savings",
+      "_value": 1573.18
     },
     {
-      "_payment": {
-        "_amount": 50000.0,
-        "_date": "2023-09-01T00:00:00"
-      },
-      "_accountName": "Ally - Taxes",
-      "_allotmentName": null
-    }
-  ],
-  "Goals": [
+      "_name": "Chase Savings",
+      "_value": 20.13
+    },
     {
-      "_name": "Buy New Car",
-      "_value": 40000.0,
-      "_deadline": "2024-04-01T00:00:00"
+      "_name": "Fidelity Independent",
+      "_value": 39077.87
     }
   ],
+  "Transactions": [],
+  "Goals": [],
   "Allotments": [
     {
-      "_goalName": "Barbershop",
-      "_value": -25000.0,
-      "_date": "2022-12-01T00:00:00"
+      "_goalName": "Home Insurance",
+      "_value": 800.0,
+      "_date": "2019-03-01T00:00:00"
+    },
+    {
+      "_goalName": "Heat Pump",
+      "_value": 15000.0,
+      "_date": "2019-04-01T00:00:00"
+    },
+    {
+      "_goalName": "Division Contest",
+      "_value": 150.0,
+      "_date": "2019-04-01T00:00:00"
+    },
+    {
+      "_goalName": "James Birthday",
+      "_value": 50.0,
+      "_date": "2019-04-01T00:00:00"
+    },
+    {
+      "_goalName": "Mandy Birthday",
+      "_value": 50.0,
+      "_date": "2019-04-01T00:00:00"
+    },
+    {
+      "_goalName": "Anniversary",
+      "_value": 50.0,
+      "_date": "2019-04-01T00:00:00"
+    },
+    {
+      "_goalName": "Mother's Day",
+      "_value": 50.0,
+      "_date": "2019-05-01T00:00:00"
+    },
+    {
+      "_goalName": "International",
+      "_value": 1200.0,
+      "_date": "2019-06-01T00:00:00"
+    },
+    {
+      "_goalName": "Car Insurance",
+      "_value": 700.0,
+      "_date": "2019-06-01T00:00:00"
+    },
+    {
+      "_goalName": "Barbershop Renewal",
+      "_value": 250.0,
+      "_date": "2019-06-01T00:00:00"
+    },
+    {
+      "_goalName": "Father's Day",
+      "_value": 50.0,
+      "_date": "2019-06-01T00:00:00"
+    },
+    {
+      "_goalName": "Van Registration",
+      "_value": 250.0,
+      "_date": "2019-10-01T00:00:00"
     }
   ]
 }

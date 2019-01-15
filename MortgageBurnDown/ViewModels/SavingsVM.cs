@@ -13,17 +13,18 @@ namespace MortgageBurnDown
 {
     public class SavingsVM : INotifyPropertyChanged
     {
+        private const string AccountValue = "Account Value";
+        private const string AllottedMoney = "Allotted Money";
+        private GazelleSeries _gazelleSeries;
         private FinancialData _financialData;
         private bool _includeGazelle;
-
-        private const string AccountValue = "AccountValue";
         private Dictionary<string, LineSeries> _seriesPlots = new Dictionary<string, LineSeries>();
-
 
         public PlotModel Model { get; private set; }
 
         public SavingsVM(FinancialData financialData)
         {
+            _gazelleSeries = GazelleSeries.Instance;
             _financialData = financialData;
 
             Model = new PlotModel();
@@ -49,10 +50,15 @@ namespace MortgageBurnDown
 
         private void InitSeries()
         {
-            var accountValueSeries = new LineSeries();
-            accountValueSeries.Title = "Account Value";
+            var accountValueSeries = new AreaSeries();
+            accountValueSeries.Title = AccountValue;
             _seriesPlots[AccountValue] = accountValueSeries;
             Model.Series.Add(accountValueSeries);
+
+            var allottedSeries = new AreaSeries();
+            allottedSeries.Title = AllottedMoney;
+            _seriesPlots[AllottedMoney] = allottedSeries;
+            Model.Series.Add(allottedSeries);
         }
 
         private void OnFinancialDataChanged(object sender, PropertyChangedEventArgs e)
@@ -96,21 +102,58 @@ namespace MortgageBurnDown
                 accountValue += account.Value;
             }
 
+            decimal allottedValue = 0m;
+            foreach (var allotment in _financialData.Allotments)
+            {
+                if (allotment.Date == null)
+                {
+                    allottedValue += allotment.Value;
+                }
+            }
+
             // Look out ~10 years of days
             for (int i = 0; i < 3650; i++)
             {
                 var day = DateTime.Today.AddDays(i);
-                
+
                 foreach (var transaction in _financialData.Transactions)
                 {
                     if (transaction.Payment.Date == day)
                     {
                         accountValue += transaction.Payment.Amount;
+
+                        if (!string.IsNullOrEmpty(transaction.AllotmentName))
+                        {
+                            allottedValue += transaction.Payment.Amount;
+                        }
+                    }
+                }
+
+                foreach (var allotment in _financialData.Allotments)
+                {
+                    if (allotment.Date == day)
+                    {
+                        allottedValue += allotment.Value;
+                    }
+                }
+
+
+                if (!_includeGazelle)
+                {
+                    foreach (var extraPayment in _gazelleSeries.ExtraPayments)
+                    {
+                        if (extraPayment.Date == day)
+                        {
+                            accountValue -= extraPayment.Amount;
+                        }
                     }
                 }
 
                 _seriesPlots[AccountValue].Points.Add(new DataPoint(DateTimeAxis.ToDouble(day), (double)accountValue));
+                _seriesPlots[AllottedMoney].Points.Add(new DataPoint(DateTimeAxis.ToDouble(day), (double)allottedValue));
             }
+
+            Model.InvalidatePlot(updateData: true);
         }
     }
 }

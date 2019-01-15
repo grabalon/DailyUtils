@@ -76,6 +76,7 @@
                             <DataGridTextColumn Header="Amount" Binding="{Binding Payment.Amount}" />
                             <DataGridTextColumn Header="Date" Binding="{Binding Payment.Date}" />
                             <DataGridTextColumn Header="Allotment" Binding="{Binding AllotmentName}" />
+                            <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
