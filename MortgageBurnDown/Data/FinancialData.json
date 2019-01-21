@@ -14,71 +14,243 @@
     },
     {
       "_name": "Fidelity Independent",
-      "_value": 39077.87
+      "_value": 7520.0
     }
   ],
-  "Transactions": [],
+  "Transactions": [
+    {
+      "_payment": {
+        "_amount": -1400.0,
+        "_date": "2019-02-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Home Insurance",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -150.0,
+        "_date": "2019-04-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Division Contest",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-04-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "James Birthday",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-04-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Mandy Birthday",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-04-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Anniversary",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-05-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Mother's Day",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -1200.0,
+        "_date": "2019-06-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "International",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -700.0,
+        "_date": "2019-06-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Car Insurance",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -250.0,
+        "_date": "2019-06-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Barbershop Renewal",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-06-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Father's Day",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -250.0,
+        "_date": "2019-10-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Van Registration",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -400.0,
+        "_date": "2019-11-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Thanksgiving",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -700.0,
+        "_date": "2019-11-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Car Insurance",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-12-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Christmas Travel",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -800.0,
+        "_date": "2019-12-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Christmas Gifts",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -130.0,
+        "_date": "2020-01-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "XTerra Registration",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -100.0,
+        "_date": "2020-01-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Twins Birthday",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2020-01-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Corina Birthday",
+      "_note": null
+    },
+    {
+      "_payment": {
+        "_amount": -50.0,
+        "_date": "2019-02-01T00:00:00"
+      },
+      "_accountName": null,
+      "_allotmentName": "Valentines",
+      "_note": null
+    }
+  ],
   "Goals": [],
   "Allotments": [
     {
-      "_goalName": "Home Insurance",
-      "_value": 800.0,
-      "_date": "2019-03-01T00:00:00"
+      "_goalName": "Mandy",
+      "_value": 160.0,
+      "_date": null
     },
     {
-      "_goalName": "Heat Pump",
-      "_value": 15000.0,
-      "_date": "2019-04-01T00:00:00"
+      "_goalName": "Birthdays",
+      "_value": 200.0,
+      "_date": null
     },
     {
-      "_goalName": "Division Contest",
-      "_value": 150.0,
-      "_date": "2019-04-01T00:00:00"
+      "_goalName": "Other Gifts",
+      "_value": 200.0,
+      "_date": null
     },
     {
-      "_goalName": "James Birthday",
-      "_value": 50.0,
-      "_date": "2019-04-01T00:00:00"
+      "_goalName": "Rhett",
+      "_value": 200.0,
+      "_date": null
     },
     {
-      "_goalName": "Mandy Birthday",
-      "_value": 50.0,
-      "_date": "2019-04-01T00:00:00"
+      "_goalName": "Levi",
+      "_value": 200.0,
+      "_date": null
     },
     {
-      "_goalName": "Anniversary",
-      "_value": 50.0,
-      "_date": "2019-04-01T00:00:00"
+      "_goalName": "Easton",
+      "_value": 220.0,
+      "_date": null
     },
     {
-      "_goalName": "Mother's Day",
-      "_value": 50.0,
-      "_date": "2019-05-01T00:00:00"
+      "_goalName": "Christmas",
+      "_value": 1000.0,
+      "_date": null
     },
     {
-      "_goalName": "International",
+      "_goalName": "License and Registration",
+      "_value": 1000.0,
+      "_date": null
+    },
+    {
+      "_goalName": "Car Insurance~",
       "_value": 1200.0,
-      "_date": "2019-06-01T00:00:00"
+      "_date": null
     },
     {
-      "_goalName": "Car Insurance",
-      "_value": 700.0,
-      "_date": "2019-06-01T00:00:00"
+      "_goalName": "Home Insurance~",
+      "_value": 1200.0,
+      "_date": null
     },
     {
-      "_goalName": "Barbershop Renewal",
-      "_value": 250.0,
-      "_date": "2019-06-01T00:00:00"
+      "_goalName": "Car Repairs",
+      "_value": 2400.0,
+      "_date": null
     },
     {
-      "_goalName": "Father's Day",
-      "_value": 50.0,
-      "_date": "2019-06-01T00:00:00"
-    },
-    {
-      "_goalName": "Van Registration",
-      "_value": 250.0,
-      "_date": "2019-10-01T00:00:00"
+      "_goalName": "Vacation",
+      "_value": 820.0,
+      "_date": null
     }
   ]
 }

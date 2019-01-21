@@ -9,6 +9,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:RootVM x:Key="RootVM" />
+        <local:NullableDateConverter x:Key="NullableDateConverter" />
     </Window.Resources>
     <Grid DataContext="{StaticResource RootVM}">
         <TabControl>
@@ -62,7 +63,13 @@
                     <TextBlock>Allotments</TextBlock>
                 </TabItem.Header>
                 <Grid>
-                    <DataGrid ItemsSource="{Binding FinancialData.Allotments}" />
+                    <DataGrid ItemsSource="{Binding FinancialData.Allotments}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Goal" Binding="{Binding GoalName}" />
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date, Converter={StaticResource NullableDateConverter}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem>

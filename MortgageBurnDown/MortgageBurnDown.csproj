@@ -74,6 +74,7 @@
     <Compile Include="Data\Goal.cs" />
     <Compile Include="Data\Payment.cs" />
     <Compile Include="Data\Transaction.cs" />
+    <Compile Include="UI\NullableDateConverter.cs" />
     <Compile Include="ViewModels\GazelleSeries.cs" />
     <Compile Include="ViewModels\GazelleVM.cs" />
     <Compile Include="ViewModels\IMortgagePaydownSeries.cs" />

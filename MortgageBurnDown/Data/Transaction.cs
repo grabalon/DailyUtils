@@ -9,7 +9,7 @@ namespace MortgageBurnDown
         public override void InitializeEvents()
         {
             base.InitializeEvents();
-            
+
             if (_payment != null)
             {
                 _payment.DataChanged += RaiseDataChanged;
@@ -50,7 +50,7 @@ namespace MortgageBurnDown
             }
         }
 
-        [DataMember]
+        [DataMember(IsRequired = false)]
         private string _accountName;
         public string AccountName
         {

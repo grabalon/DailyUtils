@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\graba\source\repos\DailyUtils\MortgageBurnDown\Data\FinancialData.json</Value>
+      <Value Profile="(Default)">C:\code\Github\DailyUtils\MortgageBurnDown\Data\FinancialData.json</Value>
     </Setting>
   </Settings>
 </SettingsFile>

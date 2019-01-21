@@ -42,8 +42,8 @@ namespace MortgageBurnDown
         }
 
         [DataMember(IsRequired = false)]
-        private DateTime _date;
-        public DateTime Date
+        private DateTime? _date;
+        public DateTime? Date
         {
             get
             {

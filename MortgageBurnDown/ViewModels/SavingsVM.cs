@@ -121,22 +121,8 @@ namespace MortgageBurnDown
                     if (transaction.Payment.Date == day)
                     {
                         accountValue += transaction.Payment.Amount;
-
-                        if (!string.IsNullOrEmpty(transaction.AllotmentName))
-                        {
-                            allottedValue += transaction.Payment.Amount;
-                        }
                     }
                 }
-
-                foreach (var allotment in _financialData.Allotments)
-                {
-                    if (allotment.Date == day)
-                    {
-                        allottedValue += allotment.Value;
-                    }
-                }
-
 
                 if (!_includeGazelle)
                 {
